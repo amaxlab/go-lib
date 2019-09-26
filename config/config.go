@@ -5,17 +5,23 @@ import (
 	"strconv"
 )
 
-func GetStringValue(name, defaultValue string) string {
-	val, ok := os.LookupEnv(name)
-	if !ok {
+type ConfigLoader struct {}
+
+func NewConfigLoader() *ConfigLoader {
+	return &ConfigLoader{}
+}
+
+func (c *ConfigLoader) String(name, defaultValue string) string {
+	val, ok := os.LookupEnv(c.getEnvVarName(name))
+	if ! ok {
 		return defaultValue
 	}
 
 	return val
 }
 
-func GetIntValue(name string, defaultValue int) int {
-	val, ok := os.LookupEnv(name)
+func (c *ConfigLoader) Int(name string, defaultValue int) int {
+	val, ok := os.LookupEnv(c.getEnvVarName(name))
 	if !ok {
 		return defaultValue
 	}
@@ -28,8 +34,8 @@ func GetIntValue(name string, defaultValue int) int {
 	return int(i64)
 }
 
-func GetBoolValue(name string, defaultValue bool) bool {
-	val, ok := os.LookupEnv(name)
+func (c *ConfigLoader) Bool(name string, defaultValue bool) bool {
+	val, ok := os.LookupEnv(c.getEnvVarName(name))
 	if !ok {
 		return defaultValue
 	}
@@ -40,4 +46,8 @@ func GetBoolValue(name string, defaultValue bool) bool {
 	}
 
 	return b
+}
+
+func (c *ConfigLoader) getEnvVarName(name string) string {
+	return fmt.Sprintf("APP_%s", strings.ToUpper(strings.Replace(name, "-", "_", -1)))
 }
