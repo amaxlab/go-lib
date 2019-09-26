@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func getStringValue(name, defaultValue string) string {
+func GetStringValue(name, defaultValue string) string {
 	val, ok := os.LookupEnv(name)
 	if !ok {
 		return defaultValue
@@ -14,7 +14,7 @@ func getStringValue(name, defaultValue string) string {
 	return val
 }
 
-func getIntValue(name string, defaultValue int) int {
+func GetIntValue(name string, defaultValue int) int {
 	val, ok := os.LookupEnv(name)
 	if !ok {
 		return defaultValue
@@ -28,7 +28,7 @@ func getIntValue(name string, defaultValue int) int {
 	return int(i64)
 }
 
-func getBoolValue(name string, defaultValue bool) bool {
+func GetBoolValue(name string, defaultValue bool) bool {
 	val, ok := os.LookupEnv(name)
 	if !ok {
 		return defaultValue
